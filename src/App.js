@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import BookList from "./book/BookList";
 import BookAdd from "./book/BookAdd";
+import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
 
 
 function App() {
@@ -11,6 +12,8 @@ function App() {
     {id : 3, titre : "test", auteur : "test auteur", favori : false},
     {id : 4, titre : "nouveau livre", auteur : "inconnu", favori : false}
   ]);
+
+  const navigate = useNavigate();
 /*const newBooksList = books.map(
       book => {
         if(book.id == idLivre){
@@ -38,27 +41,19 @@ function App() {
     book.id  = books[books.length - 1].id + 1;
     book.favori = false;
     setBooks([...books, book]);
+    navigate("/books");
   }
 
   return (
     <div className='container'>
       <h1>Gestion des livres</h1>
-      <div className ="row">
-        <BookAdd addBookHandler={addBook} />
-      </div>
-      <div className="row">
-      {
-        books.map(
-          book => <BookList
-            key={book.id}
-            id = {book.id}
-            titre = {book.titre}
-            auteur = {book.auteur}
-            favori = {book.favori} 
-            favoriHandler = {editFavori}/>
-        )
-      }
-      </div>
+      
+        <Routes>
+          <Route path="/" exact element={<Navigate to="/books" replace/>} />
+          <Route path="/books" exact element={<BookList books={books} favoriHandler={editFavori} />} />
+          <Route path="/books/add" exact element={<BookAdd addBookHandler={addBook} />} />
+        </Routes>
+      
     </div>
   );
 }
