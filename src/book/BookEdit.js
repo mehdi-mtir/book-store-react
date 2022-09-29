@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
+import { useParams } from "react-router-dom";
 
-const BookAdd = (props)=>{
-    const [book, setBook] = useState({titre : "", auteur : ""})
-
+const BookEdit = (props)=>{
+    const {id} = useParams();
+    const [book, setBook] = useState(props.books.find(b => b.id == id));
+    
     const onInputChange = ({target})=>{
         setBook({...book, [target.name] : target.value})
-        //console.log(book.titre, book.auteur);
+        console.log(book.titre, book.auteur);
     }
 
     return(
         <>
-            <h2>Ajouter un nouveau livre</h2>
+            <h2>Editer le livre : {book.titre}</h2>
             <form onSubmit={
                 (event)=>{
                     event.preventDefault();
-                    props.addBookHandler(book);
-                    setBook({titre:"",auteur:""})
+                    props.editBookHandler(book);
                 }
                 }>
                 <div className="form-group">
@@ -31,7 +32,6 @@ const BookAdd = (props)=>{
             </form>
         </>
     )
-
 }
 
-export default BookAdd;
+export default BookEdit;
