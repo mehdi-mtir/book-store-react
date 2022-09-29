@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import BookList from "./book/BookList";
 import BookAdd from "./book/BookAdd";
 import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
@@ -7,14 +7,13 @@ import BookEdit from "./book/BookEdit";
 
 function App() {
   //initialiser l'état de notre composant basé sur une fonction (possible depuis la version 16.8)
-  const [books, setBooks] = useState([
-    {id : 1, titre : "The slight Edge", auteur : "Jeff Olsen", favori : false},
-    {id : 2, titre : "harry Potter", auteur : "J.K. Roling", favori : false},
-    {id : 3, titre : "test", auteur : "test auteur", favori : false},
-    {id : 4, titre : "nouveau livre", auteur : "inconnu", favori : false}
-  ]);
+
+
+
 
   const navigate = useNavigate();
+
+
 /*const newBooksList = books.map(
       book => {
         if(book.id == idLivre){
@@ -25,19 +24,8 @@ function App() {
         }
       }
     )*/
-  const editFavori = (idLivre, favori)=>{
-    setBooks(books.map(
-      book => {
-        if(book.id == idLivre){
-          return {...book, favori:favori};
-        }
-        else{
-          return book;
-        }
-      }
-    ));
-  }
-
+  
+{/*}
   const addBook = (book)=>{
     book.id  = books[books.length - 1].id + 1;
     book.favori = false;
@@ -45,11 +33,7 @@ function App() {
     navigate("/books");
   }
 
-  const deleteBook = (id)=>{ 
-    setBooks(books.filter(
-      book => book.id != id
-    ));
-  }
+
 
   const editBook = (book) =>{
     setBooks(
@@ -64,16 +48,16 @@ function App() {
     );
     navigate("/books");
   }
-
+*/}
   return (
     <div className='container'>
       <h1>Gestion des livres</h1>
       
         <Routes>
           <Route path="/" exact element={<Navigate to="/books" replace/>} />
-          <Route path="/books" exact element={<BookList books={books} favoriHandler={editFavori} deleteHandler={deleteBook} />} />
-          <Route path="/books/add" exact element={<BookAdd addBookHandler={addBook} />} />
-          <Route path="/books/:id" element={<BookEdit books={books} editBookHandler={editBook} />} />
+          <Route path="/books" exact element={<BookList />} />
+          {/*<Route path="/books/add" exact element={<BookAdd addBookHandler={addBook} />} />
+          <Route path="/books/:id" element={<BookEdit books={books} editBookHandler={editBook} />} />*/}
         </Routes>
     </div>
   );
