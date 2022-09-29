@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BookAdd = (props)=>{
     const [book, setBook] = useState({titre : "", auteur : ""})
+    const navigate = useNavigate();
 
     const onInputChange = ({target})=>{
         setBook({...book, [target.name] : target.value})
@@ -16,7 +18,23 @@ const BookAdd = (props)=>{
                     event.preventDefault();
                     //Methode : POST
                     //URL : http://localhost:3000/books
-                    setBook({titre:"",auteur:""})
+
+                    const requestOptions = {
+                        method : 'POST',
+                        headers : {'content-type' : 'application/json'},
+                        body : JSON.stringify({titre:book.titre, auteur:book.auteur, favori:false})
+                    }
+
+                    fetch("http://localhost:3000/books/", requestOptions)
+                    .then(response=>response.json())
+                    .then(res => navigate("/books"));
+
+                    //console.log(requestOptions.body);
+                    //return;
+
+                    setBook({titre:"",auteur:""});
+
+                    
                 }
                 }>
                 <div className="form-group">

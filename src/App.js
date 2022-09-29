@@ -56,8 +56,8 @@ function App() {
         <Routes>
           <Route path="/" exact element={<Navigate to="/books" replace/>} />
           <Route path="/books" exact element={<BookList />} />
-          {/*<Route path="/books/add" exact element={<BookAdd addBookHandler={addBook} />} />
-          <Route path="/books/:id" element={<BookEdit books={books} editBookHandler={editBook} />} />*/}
+          <Route path="/books/add" exact element={<BookAdd />} />
+          {/*<Route path="/books/:id" element={<BookEdit books={books} editBookHandler={editBook} />} />*/}
         </Routes>
     </div>
   );
