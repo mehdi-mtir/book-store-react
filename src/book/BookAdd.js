@@ -14,7 +14,8 @@ const BookAdd = (props)=>{
             <form onSubmit={
                 (event)=>{
                     event.preventDefault();
-                    props.addBookHandler(book);
+                    //Methode : POST
+                    //URL : http://localhost:3000/books
                     setBook({titre:"",auteur:""})
                 }
                 }>

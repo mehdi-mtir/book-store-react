@@ -13,19 +13,34 @@ const BookList = ()=>{
         loadBooks();
     }, [])
 
-    const editFavori = (idLivre, favori)=>{
-        setBooks(books.map(
-          book => {
-            if(book.id == idLivre){
-              return {...book, favori:favori};
+    const editFavori = async (idLivre, favori)=>{
+        const newBooksList = await books.map(
+            book => {
+              if(book.id == idLivre){
+                return {...book, favori:favori};
+              }
+              else{
+                return book;
+              }
             }
-            else{
-              return book;
-            }
-          }
-        ));
+          )
+        //console.table(newBooksList);
+        setBooks(newBooksList);
+
+        const bookToEdit = newBooksList.find(b=>b.id == idLivre);
 
         //Update data on server
+        const requestOptions = {
+            method : 'PUT',
+            headers : {'content-type' : 'application/json'},
+            body : JSON.stringify({titre:bookToEdit.titre, auteur:bookToEdit.auteur, favori:bookToEdit.favori})
+        }
+
+        console.log(requestOptions.body);
+
+        fetch("http://localhost:3000/books/"+idLivre, requestOptions)
+        .then(response=>response.json())
+        .then(res => console.log(res))
       }
 
       const deleteBook = (id)=>{ 
@@ -34,6 +49,13 @@ const BookList = ()=>{
         ));
 
         //Update data on server
+        const requestOptions = {
+            method : 'DELETE',
+        }
+        fetch("http://localhost:3000/books/"+id, requestOptions)
+        .then(response=>response.json())
+        .then(res => console.log(res))
+
       }
 
     const navigate = useNavigate();
